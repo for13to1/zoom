@@ -1,0 +1,53 @@
+This is C source code for a program to do filtered zoom (resize) of 8
+and 24-bit raster images.  The program supports arbitrary floating
+point scale and translation with independent control of x and y scales,
+upsampling (interpolation) or downsampling (decimation), 1-channel
+black and white or 3-channel color pictures, overlapping source and
+destination windows within the same frame buffer, and separable
+filtering with a large choice of filters.  It can also be used for
+in-place separable filtering of images.
+
+This directory contains:
+    libsys:
+	one header file
+    libpic:
+	Subroutine package for device-independent picture I/O.
+	Modify this to add picture I/O capability for your own frame buffers
+	and file formats to the pic package and thereby to the zoom program.
+	Read the man page pic.3 to learn how.
+    zoom:
+	Source for the main program zoom, and a set of useful filter routines.
+	This code is graphics device independent, so you shouldn't have
+	to modify it.
+
+Run "make install" and it should create subdirectories include, lib, and bin,
+leaving the zoom program in bin/zoom.  Note that you shouldn't expect this
+to compile as is, as it's currently configured to link in the
+Silicon Graphics iris library.  Again, see the notes under
+"CREATING A DEVICE LIBRARY" in libpic/pic.3
+
+Please email me any enhancements, such as new device libraries for libpic;
+I'll collect and redistribute.  (I already have libpic device libraries for
+memory frame buffers, various MIT, NYIT, Pixar, Xerox PARC, and UC Berkeley
+picture file formats, Sunraster format, Utah raster toolkit RLE format,
+a fairly standard dump format, and hp98721 and iris frame buffers,
+which I may distribute in the future.)
+
+Paul Heckbert	10 Aug 1989
+UC Berkeley
+ph@miro.berkeley.edu
+-----
+Version 1.1
+13 December 1998
+
+Modified to handle PNM files (PBM, PGM, PPM for input; PGM/PPM for
+output) and compile with a default input file format of PNM.
+
+Rich Thomson <rich.thomson@xmission.com>
+-----
+Version 1.3
+7 January 2001
+
+Modified to support BMP, fixed a PNG bug, ported to VC6.
+
+Rich Thomson <rich.thomson@xmission.com>

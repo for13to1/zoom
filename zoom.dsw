@@ -1,0 +1,203 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "libjpeg"=".\libpic\jpeg-6b\libjpeg.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libpic"=".\libpic\libpic.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name libjpeg
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libpng
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name libtiff
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name netpbm
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "libpng"=".\libpic\libpng\msvc\libpng.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name zlib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "libtiff"=".\libpic\tiff-v3.5.5\libtiff\libtiff.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name libtiff mkversion
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "libtiff mkversion"=".\libpic\tiff-v3.5.5\libtiff\mkversion.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "netpbm"=".\libpic\netpbm\netpbm.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name pbm
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name pgm
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name pnm
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ppm
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "pbm"=".\libpic\netpbm\pbm\pbm.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "pgm"=".\libpic\netpbm\pgm\pgm.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name pbm
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "pnm"=".\libpic\netpbm\pnm\pnm.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ppm
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ppm"=".\libpic\netpbm\ppm\ppm.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name pgm
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "zlib"=".\libpic\libpng\msvc\zlib.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "zoom"=".\zoom.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name libpic
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

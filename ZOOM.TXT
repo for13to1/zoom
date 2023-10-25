@@ -1,0 +1,198 @@
+
+
+
+ZOOM(1)			  User Commands			  ZOOM(1)
+
+
+
+NAME
+     zoom - filtered image scale and translate
+
+SYNOPSIS
+	 Usage:	zoom [options]
+	 -src %s	source filename
+	 -dst %s	dest filename
+	 -s %d%d%d%d	source box (x0 y0 xsize	ysize)
+	 -d %d%d%d%d	dest box
+	 -sw %d%d%d%d	window (x0 y0 x1 y1)
+	 -dw %d%d%d%d	dest window
+	 -map %f%f%f%f	scale and translate: sx	sy tx ty (src to dst by	default)
+	 -square	use square mapping (don't stretch pixels)
+	 -intscale use integer scale factors
+	 -filt %s[%s	filter name in x and y (default=triangle)
+	 -supp %f[%f	filter support radius
+	 -blur %f[%f	blur factor: >1	is blurry, <1 is sharp
+	 -window %s[%s	window an IIR filter (default=blackman)
+	 -mono		monochrome mode	(1 channel)
+	 -dev	   print list of known picture devices/file formats
+	 Where %d denotes integer, %f denotes float, %s	denotes	string,
+	 and '[' marks optional	following args
+
+DESCRIPTION
+     zoom  zooms  a  raster  image from	one picture file or frame
+     buffer to another.	 The  "zoom"  operation,  also	known  as
+     "resize",	consists of a scale and	translation.  The program
+     supports arbitrary	floating point scale and translation with
+     independent  control of x and y scales, upsampling	(interpo-
+     lation) or	downsampling (decimation),  1-channel  black  and
+     white  or	3-channel  color pictures, overlapping source and
+     destination windows within	the same frame buffer, and  sepa-
+     rable filtering with a large choice of filters.  It can also
+     be	used for in-place separable  filtering	of  images.   The
+     algorithm	is  not	limited	to integer or rational scale fac-
+     tors; it can scale	by any floating	point number.	The  pro-
+     gram  uses	 the pic package for all picture I/O, so the zoom
+     source code is device-independent,	and the	program	can  read
+     and  write	any of the picture file	formats	and frame buffers
+     known by pic.  The	program	is optimized to	be nearly as fast
+     as	 special-purpose code for important special cases such as
+     point sampling.  The memory used by the algorithm is modest:
+     it	 is  proportional  to  the picture width times the filter
+     width, not	proportional to	picture	area.
+
+     To	run zoom, the user specifies the source	 and  destination
+     file  or  frame  buffer  names,  specifies	the mapping (zoom
+     transformation) and filter.  Most of these	options	have rea-
+     sonable defaults.	The program will read and write	the full-
+     screen area  of  the  source  and	destination  pictures  by
+     default;  the  user  can  specify	subrectangles to read and
+     write if desired.	Rectangles can be defined  in  either  of
+
+
+
+SunOS 5.5.1	   Last	change:	10 August 1989			1
+
+
+
+
+
+
+ZOOM(1)			  User Commands			  ZOOM(1)
+
+
+
+     two  ways:	 as a "box", which consists of xmin, ymin, xsize,
+     ysize, or as a "window", which consists of	xmin, ymin, xmax,
+     ymax.  By default,	the source window is zoomed into the des-
+     tination window.  Alternatively, a	mapping	can be	specified
+     directly with the -map option.  A mapping can be constrained
+     to	have equal scale in x and y, or	 to  have  integer  scale
+     factors,  using  the  -square and -intscale options, respec-
+     tively.
+
+     Filters are selected with the -filt option.   If  given  one
+     filter  name, -filt will use that filter in both x	and y; if
+     given two names, different	filters	can be used  in	 the  two
+     dimensions.   The	command	zoom -filt '?' prints the list of
+     filters currently known to	zoom.  That list is:
+	 NAME	   SUPPORT
+	 point	     0
+	 box	     0.5
+	 triangle    1
+	 quadratic   1.5
+	 cubic	     2
+	 catrom	     2
+	 mitchell    2
+	 gaussian    1.25
+	 sinc	     4
+	 bessel	     3.24
+     The option	-filt point gives fast pixel  replication,  -filt
+     triangle  (the  default) gives bilinear interpolation, which
+     is	suitable for most  purposes,  and  -filt  mitchell  gives
+     slower,  very  high  quality results.  The	other filters are
+     provided for experimentation.  The	time required by a filter
+     is	proportional to	its support.
+
+     Most  of  the  filters known to zoom are FIR (finite impulse
+     response),	with an	intrinsic support (width),  but	 some  of
+     them  (gaussian,  sinc,  bessel)  are  IIR	(infinite impulse
+     response),	and must be truncated at some arbitrary	 support.
+     This can be done with the -supp option.  Again, the defaults
+     are reasonable.  The IIR filters can  be  windowed	 (brought
+     down to zero) with	various	window functions listed	below:
+	 hanning
+	 hamming
+	 blackman
+	 kaiser
+     The   sinc	 and  bessel  filters  are  blackman-windowed  by
+     default.  Filters can be  scaled  artificially  to	 blur  or
+     sharpen them with the -blur option.
+
+EXAMPLES
+     zoom -src mandrill.dump
+	 Zoom  the  mandrill from picture file mandrill.dump into
+	 the default destination device	(whatever that is),  map-
+	 ping  the  file's rectangle into the device's rectangle,
+
+
+
+SunOS 5.5.1	   Last	change:	10 August 1989			2
+
+
+
+
+
+
+ZOOM(1)			  User Commands			  ZOOM(1)
+
+
+
+	 with a	triangle filter.
+
+     zoom -src mandrill.dump -filt point -square -intscale
+	 Zoom the mandrill to the default device's  full  screen,
+	 but  maintain the picture's aspect ratio, and zoom it up
+	 by an integer factor with point sampling (pixel replica-
+	 tion)
+
+     zoom -src mandrill.dump -dst iris -d 50 75	100 100
+	 Zoom  the  mandrill  into  an	iris  window  at position
+	 (50,70) with xsize=ysize=100.
+
+     zoom -src hp -dst hp -s 100 100 640 512 -d	0 0 1280 1024 -filt mitchell
+	 Zoom from hp to itself	with overlapping source	and  des-
+	 tination windows, using a mitchell filter.
+
+     zoom -src hp -dst hp -s 0 0 500 500 -d 0 0	500 500	-filt cubic -blur 2
+	 Blur (low pass	filter)	an image in-place.
+
+SEE ALSO
+     pic(3),  Discrete	Time  Signal  Processing, Alan Oppenheim,
+     Ronald Schafer, 1989.
+
+AUTHOR
+     Paul Heckbert, UC	Berkeley,  August  1989.   ph@miro.berke-
+     ley.edu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SunOS 5.5.1	   Last	change:	10 August 1989			3
+
+
+
